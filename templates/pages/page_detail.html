@@ -1,0 +1,124 @@
+{% extends "base.html" %}
+{% block title %}Detail stránky: {{ page.title }}{% endblock %}
+
+{% load static %}
+{% load comments %}
+
+
+{% block content %}
+    <h1>{{ page.title }}</h1>
+    <p>Datum vytvoření: {{ page.created|date:"d.m.Y H:i" }}</p>
+
+    <hr>
+
+    <div>{{ page.content|safe }}</div>
+
+    <hr>
+
+    <p>Poslední aktualizace: {{ page.updated|date:"d.m.Y H:i" }}, provedl 
+        {% if page.updated_by %}
+            {{ page.updated_by.first_name|default:"" }} {{ page.updated_by.last_name|default:"" }}
+        {% else %}
+            neznámý uživatel
+        {% endif %}
+    </p>
+
+    <hr>
+
+    <!--
+    <h2>Diskuze k článku</h2>
+    {% if diskuze_set %}
+        <p>
+            <a href="{% url 'diskuze:diskuze_detail' diskuze_set.id %}">
+                <i class="fa-solid fa-comments"></i>
+                Diskuze: {{ diskuze_set.nazev }}
+            </a>
+
+            <p>{{ diskuze_set.popis }}</p>
+
+            <p>Počet zpráv: {{ diskuze_set.zpravy.count }}</p>
+            
+            <form method="post" action="{% url 'diskuze:add_message' diskuze_set.id %}">
+                {% csrf_token %}
+                {{ new_message_form.as_p }}
+                <button type="submit" class="btn btn-primary">Přidat zprávu</button>
+            </form>
+
+            {% for zprava in diskuze_set.zpravy.all %}
+                <div class="zprava">
+                    <h3>{{ zprava.autor.first_name }} {{ zprava.autor.last_name }}</h3>
+                    <p><strong>{{ zprava.nazev }}</strong><em>{{ zprava.datum_vytvoreni|date:"d.m.Y H:i" }}</em></p>
+                    <p>{{ zprava.obsah|safe }}</p>
+                </div>
+            {% endfor %}
+        </p>
+    {% else %}
+        <p>Diskuze k tomuto článku zatím neexistuje.</p>
+    {% endif %}
+
+    -->
+
+    <!-- Comments section by Django Comments -->
+    <h2>Komentáře</h2>
+    
+    {% render_comment_form for page %}
+
+    <hr>
+
+    {% render_comment_list for page %}
+
+    <hr>
+
+    <div class="link-container">
+        <p>
+            <a href="{% url 'pages:edit_page' slug=page.slug %}">
+                <i class="fa-solid fa-pen-to-square"></i>
+                Upravit stránku
+            </a>
+        </p>
+        <p>
+            <a href="{% url 'index' %}">
+                <i class="fa-solid fa-backward"></i>
+                Zpět na domovskou stránku
+            </a>
+        </p>
+        <p>
+            <a href="{% url 'pages:page_list' %}">
+                <i class="fa-solid fa-list"></i>
+                Zpět na seznam stránek
+            </a>
+        </p>
+    </div>
+{% endblock %}
+
+{% block extra_scripts %}
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const inputName = document.querySelector('input[name="name"]');
+            const inputEmail = document.querySelector('input[name="email"]');
+            const inputUrl = document.querySelector('input[name="url"]');
+
+            const labelName = document.querySelector('label[for="id_name"]');
+            const labelEmail = document.querySelector('label[for="id_email"]');
+            const labelUrl = document.querySelector('label[for="id_url"]');
+
+            const inputPreview = document.querySelector('input[name="preview"]');
+
+            inputName.value = "{{ user.get_full_name|default:'' }}";
+            inputEmail.value = "{{ user.email|default:'' }}";
+            inputUrl.value = "";
+            inputPreview.value = "";
+
+            inputName.style.display = 'none';
+            inputEmail.style.display = 'none';
+            inputUrl.style.display = 'none';
+            inputPreview.style.display = 'none';
+
+            labelName.style.display = 'none';
+            labelEmail.style.display = 'none';
+            labelUrl.style.display = 'none';            
+        });
+    </script>
+
+{% endblock %}

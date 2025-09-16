@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Diskuze Detail</h1>
+    <p>Název diskuze: {{ diskuze.nazev }}</p>
+    <p>Popis diskuze: {{ diskuze.popis }}</p>
+    <p>Počet zpráv: {{ diskuze.zpravy.count }}</p>
+
+    <p><a href="{% url 'diskuze:delete_discussion' diskuze.id %}"><i class="fas fa-trash"></i><strong>Smazat diskuzi</strong></a></p>
+
+    <hr>
+
+    <form method="post" action="{% url 'diskuze:add_message' diskuze.id %}">
+        {% csrf_token %}
+        {{ zprava_form.as_p }}
+        <button type="submit" class="btn btn-primary">Přidat zprávu</button>
+    </form>
+
+    <h2>Zprávy v diskuzi</h2>
+
+    {% for zprava in diskuze.zpravy.all %}
+        <div class="zprava">
+            <h3>{{ zprava.autor.first_name }} {{ zprava.autor.last_name }}</h3>
+            <p><strong>{{ zprava.nazev }}</strong> <em>{{ zprava.datum_vytvoreni|date:"d.m.Y H:i" }}</em></p>
+            <p>{{ zprava.obsah|safe }}</p>
+        </div>
+    {% empty %}
+        <p>Žádné zprávy v této diskuzi.</p>
+    {% endfor %}
+    
+{% endblock %}

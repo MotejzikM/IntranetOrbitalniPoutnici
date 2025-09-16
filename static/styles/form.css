@@ -1,0 +1,59 @@
+form {
+    margin: 20px auto 90px auto;
+}
+
+.login-form {
+    max-width: 400px;
+    margin: auto;
+}
+
+input[type="text"],
+input[type="datetime-local"],
+textarea {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    box-sizing: border-box;
+}
+input[type="checkbox"] {
+    margin-right: 10px;
+    display: inline-block;
+}
+form label[for="showToTimeline"] {
+    display: inline-block;
+    margin-left: 5px;
+}
+form button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    display: block;
+    margin: 0 auto;
+    width: auto;
+}
+form button:hover {
+    background-color: var(--primary-color-dark);
+}
+form label {
+    display: block;
+    margin-top: 10px;
+}
+form a {
+    display: inline-block;
+    margin-top: 10px;
+    color: #007bff;
+    text-decoration: none;
+}
+form a:hover {
+    text-decoration: underline;
+}
+form textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.cke_contents.cke_reset {
+    min-height: 500px;
+}

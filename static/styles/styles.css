@@ -1,0 +1,354 @@
+/* static/styles/styles.css */
+/* Base styles for the Intranet application */
+
+:root {
+    --primary-color: #004455;
+    --primary-color-light: #006688;
+    --primary-color-dark: #002233;
+    --secondary-color: #f4f4f4;
+    --text-color: #333;
+    --link-color: #006688;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Century Gothic', sans-serif;
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+h1, h2, h3 {
+    color: var(--primary-color);
+    text-align: center;
+    margin: 20px 0;
+}
+
+.zprava {
+    background-color: var(--secondary-color);
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.08);
+    margin: 10px auto;
+}
+
+.zprava:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.12);
+}
+
+.zprava h1, .zprava h2, .zprava h3 {
+    text-align: left;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+a.line-link {
+    display: block;
+    text-align: center;
+}
+
+p {
+    margin: 10px auto;
+}
+
+p.important {
+    font-weight: bold;
+    color: var(--primary-color);
+}
+i {
+    display: inline-block;
+    margin-right: 5px;    
+}
+/*
+p strong {
+    display: inline-block;
+    width: 40%;
+}
+*/
+ul {
+    padding-left: 50px;
+    padding-top: 10px;
+    margin: 10px auto;
+    /* nastavení odrážek na 🚀*/
+    list-style-type: none;
+}
+
+ul li::before {
+    content: '🚀';
+    margin-right: 10px;
+}
+
+ul.big-list {
+    display: flex;
+    position: relative;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    padding: 0;
+    list-style: none;
+    margin: 50px auto;
+}
+
+ul.big-list li {
+    position: relative;
+    background-color: var(--secondary-color);
+    color: var(--primary-color);
+    padding: 30px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    cursor: pointer;
+    transition: box-shadow 0.3s ease;
+}
+
+ul.big-list li:hover {
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+ul.big-list a {
+    color: var(--secondary-color);
+    text-decoration: none;
+    display: block;
+    width: 100%;
+}
+
+ul.big-list li::before {
+    display: none;
+}
+
+ul.big-list li::after {
+    content: '🚀';
+    display: block;
+    text-align: center;
+    font-size: 3em;
+    position: absolute;
+    right: 0;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    opacity: 0.6;
+}
+
+p, ul, h1, h2, h3 {
+    max-width: 800px;
+    margin: 10px auto;
+}
+
+input, select, textarea, button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px auto;
+    border: 1px solid var(--primary-color);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    color: var(--text-color);
+    font-family: 'Century Gothic', sans-serif;
+}
+
+button {
+    background-color: var(--primary-color);
+    color: white;
+    cursor: pointer;
+}
+
+input[type="checkbox"],
+input[type="radio"] {
+    width: auto;
+    margin-right: 10px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background-color: var(--primary-color);
+    margin: 50px auto;
+}
+
+img {
+    max-width: 100%;
+    max-height: 500px;
+    height: auto;
+    display: block;
+    margin: 20px auto 10px auto;
+}
+
+.img {
+    position: relative;
+}
+
+.img::after {
+    content: attr(data-text);
+    display: block;
+    text-align: center;
+    font-style: italic;
+    color: var(--text-color);
+    font-size: 0.9em;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+}
+
+.main-img {
+    width: 100%;
+    height: auto;
+    max-height: 500px;
+    object-fit: cover;
+    object-position: 0 15%;
+    display: block;
+    margin: 20px auto;
+}
+
+.logo {
+    width: 70px;
+    height: auto;
+    display: block;
+    margin: 0;
+}
+
+
+header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 20px 150px;
+    text-align: center;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+header h1 {
+    margin: 0;
+    color: white;
+}
+
+button.menu-toggle {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 1.5em;
+    cursor: pointer;
+
+    display: none;
+}
+
+nav {
+    display: flex;
+    gap: 25px;
+}
+
+nav a {
+    color: white;
+    text-decoration: none;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+footer {
+    background-color: var(--primary-color);
+    color: white;
+    text-align: center;
+    padding: 10px 20px;
+    width: 100%;
+    bottom: 0;
+}
+
+footer p, aside p {
+    text-align: center;
+}
+
+footer p a {
+    color: white;
+}
+
+main {
+    padding: 20px;
+    margin: 20px auto;
+    max-width: 1500px;
+    min-height: 75vh;
+
+    display: flex;
+    flex-direction: row;
+}
+
+main article, main aside {
+    height: fit-content;
+    padding: 20px 40px 40px 40px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    border: 1px solid var(--primary-color);
+}
+
+main article {
+    flex: 3;
+    margin-right: 20px;
+}
+
+main aside {
+    flex: 1;
+    margin-left: 20px;
+}
+
+.link-container {
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    max-width: 750px;
+    margin: 20px auto;
+}
+
+@media (max-width: 850px) {
+    header {
+        text-align: center;
+    }
+}
+
+@media (max-width: 1000px) {
+    main {
+        flex-direction: column;
+    }
+
+    header {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
+    }
+
+    nav {
+        flex-direction: column;
+        gap: 10px;
+        grid-column: span 2;
+        display: none;
+    }
+
+    nav.open {
+        display: flex;
+    }
+
+    button.menu-toggle {
+        display: block;
+    }
+
+    main article, main aside {
+        width: 100%;
+        margin: 10px auto;
+    }
+    
+}
+

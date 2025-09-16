@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Seznam stránek{% endblock %}
+
+{% block content %}
+<h2>Seznam stránek</h2>
+<p>Vítejte v sekci stránek! Zde můžete spravovat své stránky
+    a prohlížet si jejich obsah.</p>
+<p>Pro přidání nové stránky, prosím, přejděte na <a href="{% url 'pages:add_page' %}">přidání stránky</a>.</p>
+<ul class="big-list">
+    {% for page in pages %}
+        <a href="{% url 'pages:page_detail' slug=page.slug %}">
+            <li>
+                <strong>{{ page.title }}</strong>
+                {% if page.updated %}
+                    <span class="updated">Aktualizováno: {{ page.updated|date:"d.m.Y H:i" }}</span>
+                {% endif %}
+            </li>
+        </a>
+    {% empty %}
+        <li>Žádné stránky k zobrazení.</li>
+    {% endfor %}
+</ul>
+<p><a href="{% url 'index' %}">
+    <i class="fa-solid fa-backward"></i>
+    Zpět na domovskou stránku
+</a></p>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // JavaScript code can be added here if needed
+</script>
+{% endblock %}
+
+{% block extra_styles %}
+{% endblock %}

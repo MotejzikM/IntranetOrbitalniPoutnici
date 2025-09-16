@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block content %}
+<h2>Upravit stránku: {{ page.title }}</h2>
+
+<form method="post">
+    {% csrf_token %}
+    {{ form.media }}
+    {{ form.as_p }}
+    <button type="submit">Uložit změny</button>
+</form>
+{% endblock %}
+
+{% block extra_scripts %}
+    <script src="{% static 'ckeditor/ckeditor/ckeditor.js' %}"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            CKEDITOR.replace('id_content');
+        });
+    </script>
+{% endblock %}

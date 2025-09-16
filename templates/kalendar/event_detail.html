@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Detail události{% endblock %}
+
+{% block content %}
+
+<h2>Detail události: {{ event.title }}</h2>
+<p>
+    <i class="fa-solid fa-calendar"></i>
+    <strong>Datum a čas:</strong> 
+    {{ event.date|date:"d.m.Y H:i" }}
+</p>
+<p>
+    <i class="fa-solid fa-circle-info"></i>
+    <strong>Popis:</strong> 
+    {{ event.description }}
+</p>
+<p>
+    <i class="fa-solid fa-location-dot"></i>
+    <strong>Místo konání:</strong> 
+    {{ event.location }}
+</p>
+<p>
+    <i class="fa-solid fa-star"></i>
+    <strong>Zobrazit na hlavní časové ose:</strong> 
+    {% if event.showToTimeline %}Ano{% else %}Ne{% endif %}
+</p>
+<p>
+    <i class="fa-solid fa-users"></i>
+    <strong>Účastníci:</strong>
+</p>
+<ul>
+    {% for user in event.participants.all %}
+        <li>{{ user.first_name }} {{ user.last_name }}</li>
+    {% empty %}
+        <li>Žádní účastníci.</li>
+    {% endfor %}
+</ul>
+
+<div class="link-container">
+    <p>
+        <a href="{% url 'kalendar:edit_event' event.id %}">
+            <i class="fa-solid fa-pen-to-square"></i>
+            Upravit událost
+        </a>
+    </p>
+    <p>
+        <a href="{% url 'kalendar:delete_event' event.id %}">
+            <i class="fa-solid fa-trash"></i>
+            Smazat událost
+        </a>
+    </p>
+    <p>
+        <a href="{% url 'kalendar:index' %}">
+            <i class="fa-solid fa-backward"></i>
+            Zpět na kalendář
+        </a>
+    </p>
+</div>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // JavaScript code can be added here if needed
+</script>
+{% endblock %}
+
+{% block extra_styles %}
+{% endblock %}

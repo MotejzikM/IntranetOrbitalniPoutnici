@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Seznam událostí{% endblock %}
+
+{% block content %}
+<h2>Seznam událostí</h2>
+<p>Vítejte v sekci událostí! Zde můžete spravovat své události a prohlížet si plánované akce.</p>
+<p>Pro přidání nové události, prosím, přejděte na <a href="{% url 'kalendar:add_event' %}">přidání události</a>.</p>
+
+<ul class="big-list">
+    {% for event in events %}
+        <a href="{% url 'kalendar:event_detail' event.id %}">
+            <li>
+                <strong>{{ event.title }}</strong> - {{ event.date|date:"d.m.Y H:i" }}
+                {% if event.location %} ({{ event.location }}) {% endif %}
+                <p>{{ event.description }}</p>
+            </li>
+        </a>
+    {% empty %}
+        <li>Žádné události k zobrazení.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // JavaScript code can be added here if needed
+</script>
+{% endblock %}
+
+{% block extra_styles %}
+{% endblock %}

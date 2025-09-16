@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Diskuze</h1>
+
+    <ul class="big-list">
+        {% for diskuze in discussions %}
+            <a href="{% url 'diskuze:diskuze_detail' diskuze.id %}">
+                <li>
+                    {{ diskuze.nazev }}
+                </li>
+            </a>
+        {% empty %}
+            <li>Žádné diskuze k zobrazení.</li>
+        {% endfor %}
+    </ul>
+
+    <hr>
+
+    <h2>Přidat novou diskuzi</h2>
+    <!-- Form for adding a new discussion "new-discussion-form"-->
+
+    <form method="post" action="{% url 'diskuze:add_discussion' %}">
+        {% csrf_token %}
+        {{ new_discussion_form.as_p }}
+        <button type="submit" class="btn btn-primary">Přidat diskuzi</button>
+    </form>
+
+    {% endblock %}

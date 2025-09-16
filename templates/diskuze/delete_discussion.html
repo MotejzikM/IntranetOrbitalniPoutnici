@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Smazat diskuzi</h1>
+    <p>Opravdu chcete smazat diskuzi "{{ diskuze.nazev }}"?</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">Smazat</button>
+    </form>
+    
+    <a href="{% url 'diskuze:diskuze_detail' diskuze.id %}" class="btn btn-secondary">
+        <button>Zrušit</button>
+    </a>
+{% endblock %}

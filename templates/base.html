@@ -1,0 +1,133 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'styles/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/form.css' %}">
+    <link rel="stylesheet" href="{% static 'styles/calendar-small.css' %}">
+    <script src="https://kit.fontawesome.com/7ca79228d0.js" crossorigin="anonymous"></script>
+
+    {% block extra_styles %}
+    
+    {% endblock %}
+
+
+    <title>{% block title %}Intranet{% endblock %} | Orbitální poutníci</title>
+</head>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const container = document.querySelector('.calendar-small');
+        if (!container) return;
+
+        container.innerHTML = '<p>Načítám události...</p>';
+
+        fetch("{% url 'kalendar:event_list_json' %}")
+            .then(response => response.json())
+            .then(data => {
+                const upcoming = data
+                    .map(event => ({
+                        ...event,
+                        dateObj: new Date(event.date)
+                    }))
+                    .filter(event => event.dateObj >= new Date())
+                    .sort((a, b) => a.dateObj - b.dateObj)
+                    .slice(0, 5);
+
+                if (upcoming.length === 0) {
+                    container.innerHTML = '<p>Žádné nadcházející události.</p>';
+                    return;
+                }
+
+                const ul = document.createElement('ul');
+                upcoming.forEach(event => {
+                    const date = event.dateObj.toLocaleDateString('cs-CZ', {
+                        weekday: 'short', year: 'numeric', month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                    });
+                    const li = document.createElement('li');
+                    li.innerHTML = `<a href="${event.url}"><strong>${event.title}</strong></a><br><small>${date}</small>`;
+                    li.style.marginBottom = '1em';
+                    ul.appendChild(li);
+                });
+
+                container.innerHTML = '';
+                container.appendChild(ul);
+            })
+            .catch(error => {
+                container.innerHTML = '<p>Chyba při načítání událostí.</p>';
+                console.error('Chyba:', error);
+            });
+    });
+</script>
+
+<body>
+
+    <header>
+        <img src="{% static 'images/logo-svetle.png' %}" alt="Orbitální poutníci Logo" class="logo">
+
+        <button class="menu-toggle" onclick="toggleMenu()">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <nav>
+            <a href="{% url 'index' %}">Domů</a>
+            <a href="{% url 'diskuze:index' %}">Diskuze</a>
+            <a href="{% url 'pages:page_list' %}">Stránky</a>
+            <a href="{% url 'kalendar:index' %}">Kalendář</a>
+            <a href="{% url 'logout' %}">Odhlásit se</a>
+        </nav>
+    </header>
+
+    <main>
+        <article>
+            {% block content %}
+
+            <h1>Intranet Orbitálních poutníků</h1>
+            
+            <ul class="big-list">
+                <a href="{% url 'diskuze:index' %}"><li>Diskuze</li></a>
+                <a href="{% url 'pages:page_list' %}"><li>Stránky</li></a>
+                <a href="{% url 'kalendar:index' %}"><li>Kalendář</li></a>
+            </ul>
+
+            {% endblock %}
+        </article>
+
+        <aside>
+            <p>Přihlášen jako:</p>
+            <p class="important">
+                {% if user.is_authenticated %}
+                    {{ user.get_full_name|default:user.username }}
+                {% else %}
+                    Nepřihlášen
+                {% endif %}
+            </p>
+
+            <hr>
+
+            <h2>Kalendář</h2>
+    
+            <div class="calendar-small">
+
+            </div>
+        </aside>
+    </main>
+
+    <footer>
+        <p>&copy; 2025-2026 Orbitální poutníci</p>
+        <p><a href="https://www.instagram.com/orbitalni_poutnici/"><i class="fa-brands fa-instagram"></i>orbitalni_poutníci</a></p>
+        <p><a href="mailto:orbitalnipoutnici@gmail.com"><i class="fa-solid fa-envelope"></i>orbitalnipoutnici@gmail.com</a></p>
+    </footer>
+
+    <script src="{% static 'scripts/menu.js' %}"></script>
+
+    {% block extra_scripts %}
+    {% endblock %}
+
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+</body>
+</html>

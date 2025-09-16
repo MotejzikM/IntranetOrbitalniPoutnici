@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}Smazat událost{% endblock %}
+
+{% block content %}
+<h2>Smazat událost: {{ event.title }}</h2>
+<p>Opravdu chcete smazat tuto událost?</p>
+<form method="post">
+    {% csrf_token %}
+    <button type="submit">Ano, smazat</button>
+    <a href="{% url 'kalendar:event_detail' event.id %}">Zrušit</a>
+</form>
+<p><a href="{% url 'kalendar:index' %}">Zpět na kalendář</a></p>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    // JavaScript code can be added here if needed
+</script>
+{% endblock %}
+
+{% block extra_styles %}
+{% endblock %}

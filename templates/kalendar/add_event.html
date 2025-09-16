@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Přidat událost{% endblock %}
+
+{% block content %}
+
+<h2>Přidat událost</h2>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <label for="title">Název události:</label>
+    <input type="text" id="title" name="title" value="{{ form.title.value }}" required>
+    <br>
+    <label for="date">Datum a čas:</label>
+    <input type="datetime-local" id="date" name="date" value="{{ form.date.value }}" required>
+    <br>
+    <label for="description">Popis:</label>
+    <textarea id="description" name="description">{{ form.description.value }}</textarea>
+    <br>
+    <label for="location">Místo konání:</label>
+    <input type="text" id="location" name="location" value="{{ form.location.value }}">
+    <br>
+    <input type="checkbox" id="showToTimeline" name="showToTimeline" {% if form.showToTimeline.value %}checked{% endif %}>
+    <label for="showToTimeline">Zobrazit na hlavní časové ose:</label>
+    <br>
+    <label for="users">Vyberte uživatele:</label>
+    <br>
+    <button type="button" onclick="vybratVsechny()">Vybrat všechny</button>
+    {% for user in users %}
+        <input type="checkbox" name="users" value="{{ user.id }}" {% if user.id in form.users.value %}checked{% endif %}> {{ user.username }}<br>
+    {% empty %}
+    <p>Žádní uživatelé k dispozici.</p>
+    {% endfor %}
+
+    <br>
+    <button type="submit">Přidat událost</button>
+</form>
+<p><a class="line-link" href="{% url 'kalendar:index' %}">Zpět na kalendář</a></p>
+
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+    function vybratVsechny() {
+        const checkboxes = document.querySelectorAll('input[name="users"]');
+        checkboxes.forEach(checkbox => {
+            checkbox.checked = true;
+        });
+    }
+</script>
+{% endblock %}
+
+{% block extra_styles %}
+<link rel="stylesheet" href="{% static 'styles/form.css' %}">
+{% endblock %}

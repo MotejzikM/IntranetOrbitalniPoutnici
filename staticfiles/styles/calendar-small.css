@@ -1,0 +1,16 @@
+/* Nastavení výšky */
+.fc {
+    height: max-content;
+}
+
+.fc .fc-button, .fc .fc-button .fc-icon, .fc .fc-scrollgrid {
+    font-size: .8em;
+}
+
+.fc .fc-button {
+    padding: 3px 6px;
+}
+
+.fc .fc-toolbar-title {
+    font-size: 1.0em;
+}
